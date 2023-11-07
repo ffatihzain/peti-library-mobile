@@ -28,22 +28,22 @@
 
 ### Sebutkan seluruh widget yang kamu gunakan untuk menyelesaikan tugas ini dan jelaskan fungsinya masing-masing.
 
-`MaterialApp`: Widget root yang digunakan untuk mengatur tema dan navigasi pada aplikasi. Widget ini menyediakan sejumlah widget dan properti default yang umum digunakan dalam material design.
-`Scaffold`: Menyediakan struktur visual dasar untuk layar di aplikasi material design, seperti appBar, body, floatingActionButton, dan lainnya.
-`AppBar`: Widget yang umumnya digunakan di bagian atas Scaffold untuk menampilkan judul aplikasi, _action_, dan leading widget seperti menu hamburger atau back button.
-`SingleChildScrollView`: Widget scrollable yang digunakan untuk membuat bagian dalam layar dapat di-_scroll_, berguna jika konten yang ditampilkan mungkin melebihi ruang layar.
-`Padding`: Widget yang memberikan padding atau jarak di sekeliling widget child-nya, untuk memberi ruang dan mengatur jarak antar elemen UI.
-`Column`: Widget yang menata children-nya secara vertikal. Ini sering digunakan untuk menampilkan serangkaian widget yang satu di atas yang lain.
-`Text`: Widget yang menampilkan string teks dengan berbagai styling seperti ukuran font, berat font (fontWeight), dan lainnya.
-`InkWell`: Widget yang memberikan efek visual saat disentuh atau diklik. Ini sering digunakan untuk memberi respons interaktif pada sentuhan pengguna.
-`Material`: Widget yang menambahkan efek visual material design seperti tinta yang menyebar pada saat InkWell disentuh.
-`Icon`: Widget yang menampilkan simbol atau ikon dari set yang tersedia di Flutter, seperti yang ditemukan dalam Material Icons atau Cupertino Icons.
-`SnackBar`: Sebuah pesan pop-up sementara yang ditampilkan di bagian bawah layar untuk memberikan feedback kepada pengguna.
-`Center`: Widget yang menengahkan child-nya secara horizontal dan/atau vertikal dalam ruang yang tersedia.
-`Container`: Widget yang digunakan untuk mengatur styling tambahan seperti padding, margin, constraints, dan lainnya untuk child widget yang ada di dalamnya.
-`RunApp`: Fungsi yang mengambil widget yang diberikan dan menjadikannya root dari pohon widget.
-`ShopCard`: Widget kustom yang dari StatelessWidget yang menyediakan representasi visual untuk item toko (ShopItem).
-`MyHomePage`: Widget kustom yang diperluas dari StatelessWidget yang bertindak sebagai halaman utama aplikasi.
+- `MaterialApp`: Widget root yang digunakan untuk mengatur tema dan navigasi pada aplikasi. Widget ini menyediakan sejumlah widget dan properti default yang umum digunakan dalam material design.
+- `Scaffold`: Menyediakan struktur visual dasar untuk layar di aplikasi material design, seperti appBar, body, floatingActionButton, dan lainnya.
+- `AppBar`: Widget yang umumnya digunakan di bagian atas Scaffold untuk menampilkan judul aplikasi, _action_, dan leading widget seperti menu hamburger atau back button.
+- `SingleChildScrollView`: Widget scrollable yang digunakan untuk membuat bagian dalam layar dapat di-_scroll_, berguna jika konten yang ditampilkan mungkin melebihi ruang layar.
+- `Padding`: Widget yang memberikan padding atau jarak di sekeliling widget child-nya, untuk memberi ruang dan mengatur jarak antar elemen UI.
+- `Column`: Widget yang menata children-nya secara vertikal. Ini sering digunakan untuk menampilkan serangkaian widget yang satu di atas yang lain.
+- `Text`: Widget yang menampilkan string teks dengan berbagai styling seperti ukuran font, berat font (fontWeight), dan lainnya.
+- `InkWell`: Widget yang memberikan efek visual saat disentuh atau diklik. Ini sering digunakan untuk memberi respons interaktif pada sentuhan pengguna.
+- `Material`: Widget yang menambahkan efek visual material design seperti tinta yang menyebar pada saat InkWell disentuh.
+- `Icon`: Widget yang menampilkan simbol atau ikon dari set yang tersedia di Flutter, seperti yang ditemukan dalam Material Icons atau Cupertino Icons.
+- `SnackBar`: Sebuah pesan pop-up sementara yang ditampilkan di bagian bawah layar untuk memberikan feedback kepada pengguna.
+- `Center`: Widget yang menengahkan child-nya secara horizontal dan/atau vertikal dalam ruang yang tersedia.
+- `Container`: Widget yang digunakan untuk mengatur styling tambahan seperti padding, margin, constraints, dan lainnya untuk child widget yang ada di dalamnya.
+- `RunApp`: Fungsi yang mengambil widget yang diberikan dan menjadikannya root dari pohon widget.
+- `ShopCard`: Widget kustom yang dari StatelessWidget yang menyediakan representasi visual untuk item toko (ShopItem).
+- `MyHomePage`: Widget kustom yang diperluas dari StatelessWidget yang bertindak sebagai halaman utama aplikasi.
 
 ### Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)
 
@@ -75,7 +75,7 @@
     ];
     ```
     - Kemudian tambahkan kode berikut di dalam Widget Build:
-    ```
+```
 @override
 Widget build(BuildContext context) {
     return Scaffold(
@@ -125,10 +125,11 @@ Widget build(BuildContext context) {
       ),
     );
 }
-    ```
+```
+
 3. **Memunculkan Snackbar**
 - Terakhir, tampilkan card dan buat Snackbar dengan membuat widget stateless baru:
-    ```
+```
 class ShopCard extends StatelessWidget {
   final ShopItem item;
 
