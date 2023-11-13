@@ -2,6 +2,78 @@
 
 ## PBP A - 2206824073
 
+<details open>
+<summary>Tugas 8</summary>
+
+# Tugas 8
+
+## Jawaban
+
+### Jelaskan perbedaan antara `Navigator.push()` dan `Navigator.pushReplacement()`, disertai dengan contoh mengenai penggunaan kedua metode tersebut yang tepat! 
+
+Metode `push()` dalam navigasi aplikasi menambahkan rute baru ke tumpukan rute yang ada, menempatkannya di posisi teratas dan menjadikannya rute aktif yang ditampilkan kepada pengguna. Sebaliknya, metode `pushReplacement()` menggantikan rute yang saat ini aktif dengan rute baru, memungkinkan transisi langsung ke rute baru tanpa menambahkan ke tumpukan. Ini berarti bahwa `push()` digunakan untuk menumpuk rute baru di atas yang lama, sedangkan `pushReplacement()` mengganti rute yang ada dengan yang baru tanpa meninggalkan rute lama di tumpukan. Dalam konteks penggunaan, jika pengguna menekan tombol kembali setelah metode `push()` digunakan, mereka akan kembali ke rute sebelumnya, tetapi setelah `pushReplacement()`, tidak akan ada rute sebelumnya untuk kembali kecuali jika ada rute lain di bawahnya di tumpukan.
+
+Contoh `Navigator.push` = Pada website _e-commerce_ ketika pengguna ingin melihat detail dari sebuah produk, maka kita perlu menggunakan `Navigator.push()` untuk membawa user ke halaman detail produk tanpa kehilangan kemampuan untuk kembali ke daftar produk.
+
+Contoh `Navigator.pushReplacement` = Pada proses login, halaman login akan digantikan oleh halaman beranda dalam stack navigasi. Jadi, jika pengguna menekan tombol kembali, mereka tidak akan kembali ke halaman login.
+
+### Jelaskan masing-masing layout widget pada Flutter dan konteks penggunaannya masing-masing!
+
+1. Container: Sering digunakan untuk mengatur tampilan sebuah objek. Container bisa memiliki padding, margin, border, dan constraints. Container juga bisa diatur untuk memiliki properti seperti shape, background color, atau box decoration.
+
+2. Row: Digunakan untuk menempatkan beberapa widget secara horizontal. Sangat berguna untuk layout yang memerlukan penempatan elemen berdampingan, seperti tombol atau ikon dalam sebuah baris.
+
+3. Column: Mirip dengan Row, tetapi untuk penempatan vertikal. Column digunakan untuk menumpuk elemen secara vertikal, seperti daftar informasi atau form input.
+
+4. Stack: Memungkinkan elemen-elemen ditumpuk di atas satu sama lain. Stack berguna untuk kasus-kasus di mana kita ingin menempatkan widget di atas widget lain, seperti badge notifikasi di atas ikon atau watermark pada gambar.
+
+5. Padding: Digunakan untuk memberikan padding, atau ruang dalam, di sekitar widget lain. Padding sering digunakan untuk memberi ruang antara border sebuah widget dengan kontennya.
+
+6. Align: Memungkinkan kita untuk mengatur posisi anak-anaknya dalam dirinya sendiri. Misalnya, Anda bisa menggunakan Align untuk menempatkan sebuah widget di pojok kanan bawah dari sebuah Container.
+
+7. Expanded: Digunakan dalam Row, Column, atau Flex untuk memberikan anak-anaknya ruang yang tersedia. Ini berguna untuk membagi ruang secara proporsional di antara elemen-elemen dalam Row atau Column.
+
+8. Flexible: Mirip dengan Expanded, tetapi memberikan kontrol yang lebih fleksibel atas pembagian ruang, dengan menggunakan parameter flex.
+
+9. Wrap: Secara otomatis memindahkan anak-anaknya ke baris atau kolom berikutnya saat tidak ada cukup ruang. Ini berguna untuk layout yang harus menyesuaikan diri dengan berbagai ukuran layar.
+
+10. ListView: Digunakan untuk membuat daftar scrollable. ListView sangat berguna untuk menampilkan daftar item yang panjang atau data yang diambil dari database.
+
+11. GridView: Memungkinkan Anda untuk membuat layout grid yang scrollable. GridView cocok untuk menampilkan banyak data dalam bentuk grid, seperti galeri foto atau pilihan produk.
+
+12. ConstrainedBox: Memberikan batasan tambahan kepada widget anaknya. Misalnya, Anda bisa membatasi ukuran maksimum widget dengan ConstrainedBox.
+
+13. SizedBox: Digunakan untuk memberikan ukuran tetap pada sebuah widget, baik lebar, tinggi, atau keduanya.
+
+14. AspectRatio: Digunakan untuk mempertahankan rasio aspek dari widget anaknya. Ini berguna ketika Anda ingin memastikan bahwa sebuah widget mempertahankan rasio lebar dan tinggi tertentu.
+
+15. FittedBox: Memastikan bahwa kontennya sesuai dengan ruang yang tersedia, mungkin dengan mengubah skala atau memotong konten.
+
+### Sebutkan apa saja elemen input pada form yang kamu pakai pada tugas kali ini dan jelaskan mengapa kamu menggunakan elemen input tersebut!
+
+1. **TextFormField** untuk `Nama Item`
+  - **Alasan Penggunaan** : Elemen input ini digunakan untuk mengumpulkan nama item yang akan ditambahkan. Nama adalah identifikasi dasar dari setiap item dan biasanya merupakan field yang wajib diisi, sehingga memiliki validator untuk memastikan bahwa input tidak kosong.
+
+2. **TextFormField** untuk `Jumlah Item`
+  - **Alasan Penggunaan** : Elemen ini digunakan untuk mengumpulkan informasi tentang jumlah atau kuantitas item. Input ini diubah menjadi tipe integer `(int.parse(value!))` karena jumlah item biasanya diwakili dalam bentuk angka. Validator juga memastikan bahwa input tidak kosong dan merupakan angka yang valid.
+
+3. **TextFormField** untuk `Deskripsi Item`
+  - **Alasan Penggunaan** : Elemen ini digunakan untuk mengumpulkan deskripsi tambahan tentang item. Deskripsi membantu dalam memberikan informasi lebih lanjut tentang item. Validator memastikan bahwa deskripsi tidak kosong untuk memastikan bahwa setiap item memiliki informasi yang cukup.
+
+### Bagaimana penerapan clean architecture pada aplikasi Flutter?
+
+Penerapan clean architecture pada aplikasi Flutter melibatkan pemisahan kode menjadi lapisan yang berbeda dengan tanggung jawab yang terpisah. Ini membantu dalam membuat kode yang lebih terorganisir, mudah untuk diuji, dan mudah untuk dikelola. Berikut ini adalah lapisan-lapisan umum dalam clean architecture yang bisa diaplikasikan pada Flutter :
+  1. **Presentation Layer** : Lapisan yang berinteraksi langsung dengan pengguna, akan terbuat widget dan screen yang membentuk UI aplikasi. Lapisan ini juga akan mengandung logic untuk mengontrol state UI seperti `StatefulWidget` dan `StatelessWidget`.
+  2. **Domain Layer (Business Logic)** : Ini adalah inti dari aplikasi Anda. Lapisan domain berisi entitas (atau model) yang murni yang tidak bergantung pada lapisan lain dan mewakili konsep-konsep bisnis aplikasi.
+  3. **Data Layer** : Lapisan ini bertanggung jawab untuk mengakses data dari berbagai sumber seperti jaringan, cache lokal, atau database. Ini akan mengimplementasikan _repositories_ yang didefinisikan di lapisan domain dan biasanya akan memiliki dua sub-lapisan, yaitu :
+    - **Data Sources** : Sumber data aktual seperti API, database lokal, atau storage lokal.
+    - **Repositories Implementations** : Implementasi dari abstraksi repository yang didefinisikan di lapisan domain. Repositori ini akan memutuskan dari mana harus mengambil data (misalnya, dari cache atau API).
+
+### Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial)
+
+
+
+</details>
 
 <details open>
 <summary>Tugas 7</summary>
