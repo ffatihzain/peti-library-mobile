@@ -17,6 +17,7 @@ Contoh `Navigator.push` = Pada website _e-commerce_ ketika pengguna ingin meliha
 
 Contoh `Navigator.pushReplacement` = Pada proses login, halaman login akan digantikan oleh halaman beranda dalam stack navigasi. Jadi, jika pengguna menekan tombol kembali, mereka tidak akan kembali ke halaman login.
 
+
 ### Jelaskan masing-masing layout widget pada Flutter dan konteks penggunaannya masing-masing!
 
 1. **Container**: Sering digunakan untuk mengatur tampilan sebuah objek. Container bisa memiliki padding, margin, border, dan constraints. Container juga bisa diatur untuk memiliki properti seperti shape, background color, atau box decoration.
@@ -49,6 +50,7 @@ Contoh `Navigator.pushReplacement` = Pada proses login, halaman login akan digan
 
 15. **FittedBox**: Memastikan bahwa kontennya sesuai dengan ruang yang tersedia, mungkin dengan mengubah skala atau memotong konten.
 
+
 ### Sebutkan apa saja elemen input pada form yang kamu pakai pada tugas kali ini dan jelaskan mengapa kamu menggunakan elemen input tersebut!
 
 1. **TextFormField** untuk `Nama Item`
@@ -60,6 +62,7 @@ Contoh `Navigator.pushReplacement` = Pada proses login, halaman login akan digan
 3. **TextFormField** untuk `Deskripsi Item`
   - **Alasan Penggunaan** : Elemen ini digunakan untuk mengumpulkan deskripsi tambahan tentang item. Deskripsi membantu dalam memberikan informasi lebih lanjut tentang item. Validator memastikan bahwa deskripsi tidak kosong untuk memastikan bahwa setiap item memiliki informasi yang cukup.
 
+
 ### Bagaimana penerapan clean architecture pada aplikasi Flutter?
 
 Penerapan clean architecture pada aplikasi Flutter melibatkan pemisahan kode menjadi lapisan yang berbeda dengan tanggung jawab yang terpisah. Ini membantu dalam membuat kode yang lebih terorganisir, mudah untuk diuji, dan mudah untuk dikelola. Berikut ini adalah lapisan-lapisan umum dalam clean architecture yang bisa diaplikasikan pada Flutter :
@@ -69,10 +72,12 @@ Penerapan clean architecture pada aplikasi Flutter melibatkan pemisahan kode men
     - **Data Sources** : Sumber data aktual seperti API, database lokal, atau storage lokal.
     - **Repositories Implementations** : Implementasi dari abstraksi repository yang didefinisikan di lapisan domain. Repositori ini akan memutuskan dari mana harus mengambil data (misalnya, dari cache atau API).
 
+
 ### Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial)
 
   1. Membuat minimal satu halaman baru pada aplikasi, yaitu halaman formulir tambah item baru.
     - Buat file baru `shoplist_form.dart` pada direktori `peti_library/lib`. Kemudian isi dengan :
+
     ```
     import 'package:flutter/material.dart';
     import 'package:stock_els/widgets/left_drawer.dart';
@@ -93,6 +98,7 @@ Penerapan clean architecture pada aplikasi Flutter melibatkan pemisahan kode men
     ```
 
     - Memakai minimal tiga elemen input, yaitu `name`, `amount`, `description`. Tambahkan elemen input sesuai dengan model pada aplikasi tugas Django yang dibuat sebelumnya. Lakukan dengan mengubah Placeholder pada `_ShopFormPageState` di `shoplist_form.dart` dengan kode berikut untuk ketiga elemen :
+
     ```
     class _ShopFormPageState extends State<ShopFormPage> {
     final _formKey = GlobalKey<FormState>();
@@ -197,10 +203,11 @@ Penerapan clean architecture pada aplikasi Flutter melibatkan pemisahan kode men
         )
       )
     }
-  }       
-    ```
+    }   
+    ```    
 
     - Memiliki sebuah tombol `Save`. Buat tombol ini dengan menambahkan `Align` pada `_ShopFormPageState` di `shoplist_form.dart`.
+    
     ```
     Align(
       alignment: Alignment.bottomCenter,
