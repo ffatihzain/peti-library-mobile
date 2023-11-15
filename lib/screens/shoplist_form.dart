@@ -11,7 +11,7 @@ class ShopFormPage extends StatefulWidget {
 class _ShopFormPageState extends State<ShopFormPage> {
   final _formKey = GlobalKey<FormState>();
   String _name = "";
-  int _price = 0;
+  int _amount = 0;
   String _description = "";
 
   @override
@@ -60,23 +60,23 @@ class _ShopFormPageState extends State<ShopFormPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    hintText: "Harga",
-                    labelText: "Harga",
+                    hintText: "Jumlah",
+                    labelText: "Jumlah",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                   ),
                   onChanged: (String? value) {
                     setState(() {
-                      _price = int.parse(value!);
+                      _amount = int.parse(value!);
                     });
                   },
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "Harga tidak boleh kosong!";
+                      return "Jumlah tidak boleh kosong!";
                     }
                     if (int.tryParse(value) == null) {
-                      return "Harga harus berupa angka!";
+                      return "Jumlah harus berupa angka!";
                     }
                     return null;
                   },
@@ -125,7 +125,7 @@ class _ShopFormPageState extends State<ShopFormPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text('Nama: $_name'),
-                                    Text('Harga: $_price'),
+                                    Text('Jumlah: $_amount'),
                                     Text('Deskripsi: $_description'),
                                   ],
                                 ),
