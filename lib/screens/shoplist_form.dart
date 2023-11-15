@@ -73,10 +73,10 @@ class _ShopFormPageState extends State<ShopFormPage> {
                   },
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
-                      return "Harga tidak boleh kosong!";
+                      return "Jumlah tidak boleh kosong!";
                     }
                     if (int.tryParse(value) == null) {
-                      return "Harga harus berupa angka!";
+                      return "Jumlah harus berupa angka!";
                     }
                     return null;
                   },
@@ -125,7 +125,7 @@ class _ShopFormPageState extends State<ShopFormPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text('Nama: $_name'),
-                                    Text('Harga: $_amount'),
+                                    Text('Jumlah: $_amount'),
                                     Text('Deskripsi: $_description'),
                                   ],
                                 ),
