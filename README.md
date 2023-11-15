@@ -75,269 +75,276 @@ Penerapan clean architecture pada aplikasi Flutter melibatkan pemisahan kode men
 
 ### Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial)
 
-  1. Membuat minimal satu halaman baru pada aplikasi, yaitu halaman formulir tambah item baru.
-    - Buat file baru `shoplist_form.dart` pada direktori `peti_library/lib`. Kemudian isi dengan :
+1. **Membuat minimal satu halaman baru pada aplikasi, yaitu halaman formulir tambah item baru.**
+   - Buat file baru `shoplist_form.dart` pada direktori `peti_library/lib`. Kemudian isi dengan:
 
-    ```
-    import 'package:flutter/material.dart';
-    import 'package:stock_els/widgets/left_drawer.dart';
+     ```dart
+     import 'package:flutter/material.dart';
+     import 'package:stock_els/widgets/left_drawer.dart';
 
-    class ShopFormPage extends StatefulWidget {
-        const ShopFormPage({super.key});
+     class ShopFormPage extends StatefulWidget {
+         const ShopFormPage({super.key});
 
-        @override
-        State<ShopFormPage> createState() => _ShopFormPageState();
-    }
+         @override
+         State<ShopFormPage> createState() => _ShopFormPageState();
+     }
 
-    class _ShopFormPageState extends State<ShopFormPage> {
-        @override
-        Widget build(BuildContext context) {
-            return Placeholder();
-        }
-    }
-    ```
+     class _ShopFormPageState extends State<ShopFormPage> {
+         @override
+         Widget build(BuildContext context) {
+             return Placeholder();
+         }
+     }
+     ```
 
-    - Memakai minimal tiga elemen input, yaitu `name`, `amount`, `description`. Tambahkan elemen input sesuai dengan model pada aplikasi tugas Django yang dibuat sebelumnya. Lakukan dengan mengubah Placeholder pada `_ShopFormPageState` di `shoplist_form.dart` dengan kode berikut untuk ketiga elemen :
+   - Memakai minimal tiga elemen input, yaitu `name`, `amount`, `description`. Tambahkan elemen input sesuai dengan model pada aplikasi tugas Django yang dibuat sebelumnya. Lakukan dengan mengubah Placeholder pada `_ShopFormPageState` di `shoplist_form.dart` dengan kode berikut untuk ketiga elemen:
 
-    ```
-    class _ShopFormPageState extends State<ShopFormPage> {
-    final _formKey = GlobalKey<FormState>();
-    String _name = "";
-    int _amount = 0;
-    String _description = "";
+     ```dart
+     class _ShopFormPageState extends State<ShopFormPage> {
+     final _formKey = GlobalKey<FormState>();
+     String _name = "";
+     int _amount = 0;
+     String _description = "";
 
-    @override
-    Widget build(BuildContext context) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Center(
-            child: Text(
-              'Form Tambah Item',
-            ),
-          ),
-          backgroundColor: Colors.indigo,
-          foregroundColor: Colors.white,
-        ),
-        drawer: const LeftDrawer(),
-        body: Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "Nama Item",
-                      labelText: "Nama Item",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                    ),
-                    onChanged: (String? value) {
-                      setState(() {
-                        _name = value!;
-                      });
-                    },
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return "Nama tidak boleh kosong!";
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "Jumlah",
-                      labelText: "Jumlah",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                    ),
-                    onChanged: (String? value) {
-                      setState(() {
-                        _amount = int.parse(value!);
-                      });
-                    },
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return "Harga tidak boleh kosong!";
-                      }
-                      if (int.tryParse(value) == null) {
-                        return "Harga harus berupa angka!";
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "Deskripsi",
-                      labelText: "Deskripsi",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                      ),
-                    ),
-                    onChanged: (String? value) {
-                      setState(() {
-                        _description = value!;
-                      });
-                    },
-                    validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return "Deskripsi tidak boleh kosong!";
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-              ]
-            )
-          )
-        )
-      )
-    }
-    }   
-    ```    
+     @override
+     Widget build(BuildContext context) {
+       return Scaffold(
+         appBar: AppBar(
+           title: const Center(
+             child: Text(
+               'Form Tambah Item',
+             ),
+           ),
+           backgroundColor: Colors.indigo,
+           foregroundColor: Colors.white,
+         ),
+         drawer: const LeftDrawer(),
+         body: Form(
+             key: _formKey,
+             child: SingleChildScrollView(
+                 child: Column(
+               crossAxisAlignment: CrossAxisAlignment.start,
+               children: [
+                 Padding(
+                   padding: const EdgeInsets.all(8.0),
+                   child: TextFormField(
+                     decoration: InputDecoration(
+                       hintText: "Nama Item",
+                       labelText: "Nama Item",
+                       border: OutlineInputBorder(
+                         borderRadius: BorderRadius.circular(5.0),
+                       ),
+                     ),
+                     onChanged: (String? value) {
+                       setState(() {
+                         _name = value!;
+                       });
+                     },
+                     validator: (String? value) {
+                       if (value == null or value.isEmpty) {
+                         return "Nama tidak boleh kosong!";
+                       }
+                       return null;
+                     },
+                   ),
+                 ),
+                 Padding(
+                   padding: const EdgeInsets.all(8.0),
+                   child: TextFormField(
+                     decoration: InputDecoration(
+                       hintText: "Jumlah",
+                       labelText: "Jumlah",
+                       border: OutlineInputBorder(
+                         borderRadius: BorderRadius.circular(5.0),
+                       ),
+                     ),
+                     onChanged: (String? value) {
+                       setState(() {
+                         _amount = int.parse(value!);
+                       });
+                     },
+                     validator: (String? value) {
+                       if (value == null or value.isEmpty) {
+                         return "Harga tidak boleh kosong!";
+                       }
+                       if (int.tryParse(value) == null) {
+                         return "Harga harus berupa angka!";
+                       }
+                       return null;
+                     },
+                   ),
+                 ),
+                 Padding(
+                   padding: const EdgeInsets.all(8.0),
+                   child: TextFormField(
+                     decoration: InputDecoration(
+                       hintText: "Deskripsi",
+                       labelText: "Deskripsi",
+                       border: OutlineInputBorder(
+                         borderRadius: BorderRadius.circular(5.0),
+                       ),
+                     ),
+                     onChanged: (String? value) {
+                       setState(() {
+                         _description = value!;
+                       });
+                     },
+                     validator: (String? value) {
+                       if (value == null or value.isEmpty) {
+                         return "Deskripsi tidak boleh kosong!";
+                       }
+                       return null;
+                     },
+                   ),
+                 ),
+               ]
+             )
+           )
+         )
+       )
+     }
+     }   
+     ```
 
-    - Memiliki sebuah tombol `Save`. Buat tombol ini dengan menambahkan `Align` pada `_ShopFormPageState` di `shoplist_form.dart`.
-    
-    ```
-    Align(
-      alignment: Alignment.bottomCenter,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ElevatedButton(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.indigo),
-          ),
-          onPressed: () {
-            if (_formKey.currentState!.validate()) {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: const Text('Item berhasil tersimpan'),
-                    content: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Nama: $_name'),
-                          Text('Harga: $_amount'),
-                          Text('Deskripsi: $_description'),
-                        ],
-                      ),
-                    ),
-                    actions: [
-                      TextButton(
-                        child: const Text('OK'),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
-              _formKey.currentState!.reset();
-            }
-          },
-          child: const Text(
-            "Save",
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-      ),
-    ),
-    ```
-    - Setiap elemen input di formulir juga harus divalidasi dengan ketentuan sebagai berikut:
-      - Setiap elemen input tidak boleh kosong.
+   - Memiliki sebuah tombol `Save`. Buat tombol ini dengan menambahkan `Align` pada `_ShopFormPageState` di `shoplist_form.dart`.
 
-      ```
-      validator: (String? value) {
-        if (value == null || value.isEmpty) {
-            return "Nama tidak boleh kosong!";
-        }
-        return null;
-      },
-      ```
+     ```dart
+     Align(
+       alignment: Alignment.bottomCenter,
+       child: Padding(
+         padding: const EdgeInsets.all(8.0),
+         child: ElevatedButton(
+           style: ButtonStyle(
+             backgroundColor: MaterialStateProperty.all(Colors.indigo),
+           ),
+           onPressed: () {
+             if (_formKey.currentState!.validate()) {
+               showDialog(
+                 context: context,
+                 builder: (context) {
+                   return AlertDialog(
+                     title: const Text('Item berhasil tersimpan'),
+                     content: SingleChildScrollView(
+                       child: Column(
+                         crossAxisAlignment: CrossAxisAlignment.start,
+                         children: [
+                           Text('Nama: $_name'),
+                           Text('Harga: $_amount'),
+                           Text('Deskripsi: $_description'),
+                         ],
+                       ),
+                     ),
+                     actions: [
+                       TextButton(
+                         child: const Text('OK'),
+                         onPressed: () {
+                           Navigator.pop(context);
+                         },
+                       ),
+                     ],
+                   );
+                 },
+               );
+               _formKey.currentState!.reset();
+             }
+           },
+           child: const Text(
+             "Save",
+             style: TextStyle(color: Colors.white),
+           ),
+         ),
+       ),
+     ),
+     ```
 
-      - Setiap elemen input harus berisi data dengan tipe data atribut modelnya.
+   - Setiap elemen input di formulir juga harus divalidasi dengan ketentuan sebagai berikut:
+     - Setiap elemen input tidak boleh kosong.
 
-      ```
-      validator: (String? value) {
-        if (value == null || value.isEmpty) {
-          return "Jumlah tidak boleh kosong!";
-        }
-        if (int.tryParse(value) == null) {
-          return "Jumlah harus berupa angka!";
-        }
-        return null;
-      },
-      ```
-  2. Mengarahkan pengguna ke halaman form tambah item baru ketika menekan tombol Tambah Item pada halaman utama.
-    - Tambahkan navigator di `shop_card.dart`, hal ini dilakukan agar program akan _redirect_ ke `ShopFormPage()` ketika button ditekan.
-    ```
-    if (item.name == "Tambah Item") {
-      Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ShopFormPage()),
-      );
-    }
-    ```
-    - Tambahkan drawer di `menu.dart`
-      ```
-      import 'package:stock_els/widgets/left_drawer.dart';
-      ...
+       ```dart
+       validator: (String? value) {
+         if (value == null or value.isEmpty) {
+             return "Nama tidak boleh kosong!";
+         }
+         return null;
+       },
+       ```
 
-      drawer: const LeftDrawer(),
-      ...
-      ```
+     - Setiap elemen input harus berisi data dengan tipe data atribut modelnya.
+
+       ```dart
+       validator: (String? value) {
+         if (value == null or value.isEmpty) {
+           return "Jumlah tidak boleh kosong!";
+         }
+         if (int.tryParse(value) == null) {
+           return "Jumlah harus berupa angka!";
+         }
+         return null;
+       },
+       ```
+
+2. **Mengarahkan pengguna ke halaman form tambah item baru ketika menekan tombol Tambah Item pada halaman utama.**
+   - Tambahkan navigator di `shop_card.dart`, hal ini dilakukan agar program akan _redirect_ ke `ShopFormPage()` ketika button ditekan.
+
+     ```dart
+     if (item.name == "Tambah Item") {
+       Navigator.push(
+           context,
+           MaterialPageRoute(builder: (context) => ShopFormPage()),
+       );
+     }
+     ```
+
+   - Tambahkan drawer di `menu.dart`
+
+     ```dart
+     import 'package:stock_els/widgets/left_drawer.dart';
+     ...
+
+     drawer: const LeftDrawer(),
+     ...
+     ```
   3. Memunculkan data sesuai isi dari formulir yang diisi dalam sebuah pop-up setelah menekan tombol Save pada halaman formulir tambah item baru.
     Sudah dicakup diatas, edit class `_ShopFormPageState` di `shoplist_form.dart`. bagian yang memunculkan data sesuai dimulai dari baris kode `onPressed()`.
-    ```
-    onPressed: () {
-      if (_formKey.currentState!.validate()) {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: const Text('Item berhasil tersimpan'),
-              content: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Nama: $_name'),
-                    Text('Jumlah: $_amount'),
-                    Text('Deskripsi: $_description'),
-                  ],
+
+      ```dart
+      onPressed: () {
+        if (_formKey.currentState!.validate()) {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Item berhasil tersimpan'),
+                content: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Nama: $_name'),
+                      Text('Jumlah: $_amount'),
+                      Text('Deskripsi: $_description'),
+                    ],
+                  ),
                 ),
-              ),
-              actions: [
-                TextButton(
-                  child: const Text('OK'),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            );
-          },
-        );
-        _formKey.currentState!.reset();
-      }
-    },
-    ```
+                actions: [
+                  TextButton(
+                    child: const Text('OK'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+          _formKey.currentState!.reset();
+        }
+      },
+      ```
 
   4. Membuat sebuah drawer pada aplikasi dengan ketentuan sebagai berikut:
     - Drawer minimal memiliki dua buah opsi, yaitu `Halaman Utama` dan `Tambah Item`. Ketika memiih opsi `Halaman Utama`, maka aplikasi akan mengarahkan pengguna ke halaman utama. Ketika memiih opsi `Tambah Item`, maka aplikasi akan mengarahkan pengguna ke halaman form tambah item baru.
       - Buat file `left_drawer.dart` untuk membuat drawer yang ada di kiri halaman.
+      
       ```
       import 'package:flutter/material.dart';
       import 'package:peti_library/screens/menu.dart';
@@ -385,6 +392,7 @@ Penerapan clean architecture pada aplikasi Flutter melibatkan pemisahan kode men
       ```
 
       - Tambahkan kode berikut di class `LeftDrawer`.
+
       ```
       ListTile(
         leading: const Icon(Icons.home_outlined),
@@ -403,6 +411,7 @@ Penerapan clean architecture pada aplikasi Flutter melibatkan pemisahan kode men
       ```
 
       - Tambahkan kode navigator dalam `onTap()` untuk pergi ke `Halaman Utama` yaitu `MyHomePage`.
+
       ```
       onTap: () {
         Navigator.pushReplacement(
