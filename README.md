@@ -344,8 +344,8 @@ Penerapan clean architecture pada aplikasi Flutter melibatkan pemisahan kode men
   4. Membuat sebuah drawer pada aplikasi dengan ketentuan sebagai berikut:
     - Drawer minimal memiliki dua buah opsi, yaitu `Halaman Utama` dan `Tambah Item`. Ketika memiih opsi `Halaman Utama`, maka aplikasi akan mengarahkan pengguna ke halaman utama. Ketika memiih opsi `Tambah Item`, maka aplikasi akan mengarahkan pengguna ke halaman form tambah item baru.
       - Buat file `left_drawer.dart` untuk membuat drawer yang ada di kiri halaman.
-      
-      ```
+
+      ```dart
       import 'package:flutter/material.dart';
       import 'package:peti_library/screens/menu.dart';
       import 'package:peti_library/screens/shoplist_form.dart';
@@ -393,7 +393,7 @@ Penerapan clean architecture pada aplikasi Flutter melibatkan pemisahan kode men
 
       - Tambahkan kode berikut di class `LeftDrawer`.
 
-      ```
+      ```dart
       ListTile(
         leading: const Icon(Icons.home_outlined),
         title: const Text('Halaman Utama'),
@@ -412,7 +412,7 @@ Penerapan clean architecture pada aplikasi Flutter melibatkan pemisahan kode men
 
       - Tambahkan kode navigator dalam `onTap()` untuk pergi ke `Halaman Utama` yaitu `MyHomePage`.
 
-      ```
+      ```dart
       onTap: () {
         Navigator.pushReplacement(
             context,
@@ -422,7 +422,7 @@ Penerapan clean architecture pada aplikasi Flutter melibatkan pemisahan kode men
       },
       ```
       - Tambahkan kode navigator dalam `onTap()` untuk pergi ke halaman form `Tambah Item` yaitu `ShopFormPage`.
-      ```
+      ```dart
       onTap: () {
         Navigator.pushReplacement(
             context,
