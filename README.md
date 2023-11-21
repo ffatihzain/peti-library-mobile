@@ -2,6 +2,63 @@
 
 ## PBP A - 2206824073
 
+
+<details open>
+<summary>Tugas 9</summary>
+
+# Tugas 9
+
+## Jawaban
+
+### Apakah bisa kita melakukan pengambilan data JSON tanpa membuat model terlebih dahulu? Jika iya, apakah hal tersebut lebih baik daripada membuat model sebelum melakukan pengambilan data JSON?
+
+Ya, kita masih bisa melakukan pengambilan data JSON tanpa perlu membuat model terlebih dahulu. Hal ini dilakukan dengan melakukan _parse_ data JSOn menjadi struktur data umum seperti _dictionary_ atau _list_. Kita dapat menggunakan modul bawaan `json` yang disediakan `Python` kemudian melakukan `json.loads()` untuk menguraikan string JSON, yang akan membaca file JSON itu sendiri. Setelah data diuraikan, baru bisa diakses menggunakan operasi standar _dictionary_ atau _list_. Metode ini biasa digunakan oleh aplikasi yang membutuhkan fleksibilitas dalam strukturnya. Dalam konteks `Django`, biasanya penggunaan model masih lebih diunggulkan ketika ingin melakukan pengambilan data JSON. Beberapa alasan yang mendukung hal ini adalah pembuatan model secara otomatis menangani validasi dan konversi _data type_, `Django` juga menyediakan sistem migrasi database yang kuat yang berhubungan dengan model. Pembuatan model juga lebih memudahkan pemeliharaan dan skalabilitas dari kode.
+
+### Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.
+
+Dalam Flutter, yang merupakan framework untuk membuat aplikasi mobile, `CookieRequest` memiliki beberapa fungsi yaitu :
+- **Manajemen Sesi Pengguna** : `Cookies` sering digunakan untuk mengelola sesi pengguna. Jika aplikasi memerlukan pengguna untuk login, cookie dapat menyimpan token atau ID sesi yang perlu dikirimkan dengan setiap permintaan HTTP untuk mengautentikasi pengguna.
+- **Konsistensi State** : Berbagi instance `CookieRequest` memastikan bahwa semua permintaan HTTP dari aplikasi menggunakan state cookie yang sama, yang penting untuk konsistensi sesi dan preferensi pengguna.
+
+Pembagian instance `CookieRequest` yang sama ke seluruh komponen memungkinkan manajemen sesi yang konsisten, memastikan keamanan dan integritas data, serta mempermudah pemeliharaan dan pengembangan aplikasi. Hal ini menciptakan pusat kontrol yang tunggal untuk menangani cookie, meminimalkan duplikasi kode, dan meningkatkan efisiensi pengembangan dengan memungkinkan perubahan pada manajemen cookie dilakukan di satu tempat. Konsistensi ini juga penting untuk menjaga konsistensi perilaku antar layanan dan mengoptimalkan performa aplikasi, terutama dalam mengelola state yang kompleks atau data sensitif yang perlu disinkronkan di seluruh aplikasi.
+
+### Jelaskan mekanisme pengambilan data dari JSON hingga dapat ditampilkan pada Flutter.
+
+- **Pengambilan Data** : Pertama, aplikasi harus melakukan permintaan ke sumber data, yang bisa berupa server web atau file lokal. Hal ini dilakukan menggunakan dependensi `http` untuk melakukan permintaan HTTP ke server yang menyediakan data JSON.
+- **Pembuatan Model** : Membuat model sesuai dengan respons dari data yang berasal dari web service tersebut.
+- **Konversi Data** : Tambahkan method seperti `ToJson` dan `FromJson` di dalam model. Hal tersebut disebabkan ketika kita me-request suatu web service dengan method GET, kita mendapatkan hasil pemanggilan berupa JSON. Oleh karena itu, kita menggunakan method `fromJson`untuk konversi data agar Flutter mengenali JSON tersebut sebagai objek model.Selain itu, terdapat juga method `toJson` yang akan digunakan ketika kita melakukan pengiriman data ke web service (seperti POST atau PUT).
+- **Pembuatan Widget** : Dengan data yang telah diuraikan dan tersimpan dalam state, kita dapat membangun widget yang menggunakan data tersebut untuk menampilkan informasi di layar. Ini dapat melibatkan penggunaan widget seperti `Text`, `ListView`, `GridView`, dan lainnya.
+
+### Jelaskan mekanisme autentikasi dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+
+Mekanisme autentikasi dari input data akun pada Flutter ke Django, hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter membutuhkan beberapa langkah :
+
+- **Input Data Akun di Flutter**
+  - Pengguna memasukkan data akun (username dan password) melalui form yang disediakan di aplikasi Flutter.
+  - Flutter mengumpulkan data dan mempersiapkannya untuk dikirim ke server Django.
+- **Pengiriman Data ke Server Django**
+  - Flutter membuat permintaan HTTP, dengan menggunakan POST ke endpoint API Django yang menangani autentikasi dalam format JSON.
+- **Penerimaan dan Proses Autentikasi di Django**
+  - Django menerima request di _server side_, mengekstrak data akun, dan memprosesnya.
+  - Django melakukan pengecekan pada database pengguna untuk menemukan kecocokan antara username dan password yang dimasukkan.
+  - Jika berhasil, Django men-_generate_ token dan kemudian mengirimkannya sebagai respons.
+- **Flutter Menerima Respons**
+  - Flutter menerima respons dari server Django. Jika autentikasi berhasil, respons akan mencakup token autentikasi.
+- **Manajemen State dan Navigasi**
+  - Flutter meng _update_ state aplikasi untuk mencerminkan status pengguna yang telah terautentikasi.
+  - Berdasarkan status autentikasi, Flutter mengarahkan pengguna ke menu utama atau halaman berikutnya dalam aplikasi.
+- **Menampilkan Menu Home Page**
+  - Setelah pengguna terautentikasi dan diarahkan, menu atau halaman relevan ditampilkan.
+
+### Sebutkan seluruh widget yang kamu pakai pada tugas ini dan jelaskan fungsinya masing-masing.
+
+
+
+### Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial).
+
+</details>
+
+
 <details open>
 <summary>Tugas 8</summary>
 
