@@ -52,9 +52,479 @@ Mekanisme autentikasi dari input data akun pada Flutter ke Django, hingga selesa
 
 ### Sebutkan seluruh widget yang kamu pakai pada tugas ini dan jelaskan fungsinya masing-masing.
 
+- **MaterialApp**: Sebagai root widget yang mengatur tema dan navigasi di seluruh aplikasi. Ini adalah titik awal untuk menjalankan aplikasi Flutter.
 
+- **Scaffold**: Menyediakan kerangka dasar material design, termasuk AppBar, Drawer, dan Body. Digunakan untuk menampilkan berbagai komponen di layar.
+
+- **AppBar**: Menampilkan sebuah app bar di bagian atas layar. Biasanya digunakan untuk judul, aksi, dan navigasi kembali.
+
+- **Drawer**: Widget drawer yang memberikan navigasi menu samping. Biasanya digunakan untuk navigasi ke berbagai bagian aplikasi.
+
+- **ListView**: Menyediakan daftar scrollable. Dalam konteks ini, digunakan untuk menampilkan daftar item.
+
+- **ListTile**: Widget baris tunggal dengan icon dan text, biasanya digunakan dalam ListView untuk menampilkan item.
+
+**Text**: Menampilkan string teks dengan styling tertentu.
+
+**Padding**: Menambahkan padding di sekitar widget anaknya.
+
+**Column**: Menata anak-anaknya secara vertikal. Digunakan untuk menyusun widget secara vertikal.
+
+**Icon**: Menampilkan ikon dari set ikon material.
+
+**ElevatedButton**: Tombol material dengan elevasi yang memberikan efek bayangan. Digunakan untuk membuat tombol interaktif.
+
+**TextField**: Widget input teks, digunakan untuk form input seperti username dan password.
+
+**SizedBox**: Memberikan kotak dengan ukuran tetap, sering digunakan untuk memberikan jarak antar widget.
+
+**AlertDialog**: Menampilkan dialog kepada pengguna, biasanya untuk konfirmasi atau informasi.
+
+**Form**: Mengelompokkan dan mengelola multiple FormField widget.
+
+**TextFormField**: Sebuah Field Form untuk input teks dengan validasi.
+
+**InkWell**: Memberikan efek ripple ketika ditekan, sering digunakan untuk menambahkan interaktivitas pada widget.
+
+**FutureBuilder**: Widget yang membangun dirinya sendiri berdasarkan interaksi terakhir dengan Future. Digunakan untuk menampilkan data dari Future seperti hasil permintaan HTTP.
+
+**Material**: Menyediakan tampilan material pada widget, sering digunakan sebagai latar belakang atau container untuk efek visual material.
+
+**Container**: Container yang dapat diatur, digunakan untuk mendekorasi, mengatur ukuran, atau menyusun layout widget lainnya.
+
+**ShopCard**: Custom widget yang digunakan untuk menampilkan informasi tentang item, dalam konteks aplikasi saya adalah buku.
+
+**Provider**: Digunakan untuk manajemen state, mengelola data dan membuatnya dapat diakses di banyak widget.
 
 ### Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial).
+
+1. Membuat halaman login pada proyek tugas Flutter
+  - Pada folder `lib/screens` buat file baru bernama `login.dart` untuk handle proses login.
+
+  ``` dart
+  import 'package:peti_library/screens/menu.dart';
+  import 'package:flutter/material.dart';
+  import 'package:pbp_django_auth/pbp_django_auth.dart';
+  import 'package:provider/provider.dart';
+
+  void main() {
+    runApp(const LoginApp());
+  }
+
+  class LoginApp extends StatelessWidget {
+    const LoginApp({super.key});
+
+    @override
+    Widget build(BuildContext context) {
+      return MaterialApp(
+        title: 'Login',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const LoginPage(),
+      );
+    }
+  }
+
+  class LoginPage extends StatefulWidget {
+    const LoginPage({super.key});
+
+    @override
+    _LoginPageState createState() => _LoginPageState();
+  }
+
+  class _LoginPageState extends State<LoginPage> {
+    final TextEditingController _usernameController = TextEditingController();
+    final TextEditingController _passwordController = TextEditingController();
+
+    @override
+    Widget build(BuildContext context) {
+      final request = context.watch<CookieRequest>();
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Login'),
+        ),
+        body: Container(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextField(
+                controller: _usernameController,
+                decoration: const InputDecoration(
+                  labelText: 'Username',
+                ),
+              ),
+              const SizedBox(height: 12.0),
+              TextField(
+                controller: _passwordController,
+                decoration: const InputDecoration(
+                  labelText: 'Password',
+                ),
+                obscureText: true,
+              ),
+              const SizedBox(height: 24.0),
+              ElevatedButton(
+                onPressed: () async {
+                  String username = _usernameController.text;
+                  String password = _passwordController.text;
+
+                  final response =
+                      await request.login("http://127.0.0.1:8000/auth/login/", {
+                    'username': username,
+                    'password': password,
+                  });
+
+                  if (request.loggedIn) {
+                    String message = response['message'];
+                    String uname = response['username'];
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => MyHomePage()),
+                    );
+                    ScaffoldMessenger.of(context)
+                      ..hideCurrentSnackBar()
+                      ..showSnackBar(SnackBar(
+                          content: Text("$message Selamat datang, $uname.")));
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Login Gagal'),
+                        content: Text(response['message']),
+                        actions: [
+                          TextButton(
+                            child: const Text('OK'),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                },
+                child: const Text('Login'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+  }
+  ```
+
+- Pada `main.dart`, ubah `home: MyHomePage()` menjadi `home: LoginPage()` untuk redirect user ke page login terlebih dahulu sebelum masuk ke aplikasi.
+
+2. Mengintegrasikan sistem autentikasi Django dengan proyek tugas Flutter
+  - Melakukan integrasi autentikasi Django-Flutter seperti yang disediakan di Tutorial, seperti membuat app baru pada proyek Django bernama `authentication`. Kemudian melakukan instalasi `pip install django-cors-headers`.
+  - Menyambungkan proses login antara Django dan Flutter dengan membuat method `login` pada `authentication/views.py`. Kemudian tambahkan pathnya di `urls.py`.
+  - Install _package_ yang telah disediakan tim asdos yaitu
+
+  ``` dart
+  flutter pub add provider
+  flutter pub add pbp_django_auth
+  ```
+
+  - Modifikasi _root widget_ untuk menyediakan `CookieRequest` _library_ ke semua _child widgets_ dengan menggunakan `Provider`. Ubah `main.dart` menjadi :
+
+  ``` dart
+  class MyApp extends StatelessWidget {
+    const MyApp({Key? key}) : super(key: key);
+
+    @override
+    Widget build(BuildContext context) {
+      return Provider(
+        create: (_) {
+          CookieRequest request = CookieRequest();
+          return request;
+        },
+        child: MaterialApp(
+            title: 'Flutter App',
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
+              useMaterial3: true,
+            ),
+            home: const LoginPage()),
+      );
+    }
+  }
+  ```
+
+3. Membuat model kustom sesuai dengan proyek aplikasi Django
+  - Copy data endpoint `JSON` dari proyek django dengan membuka `http://localhost:8000/json`.
+  - Paste data ke situs web [Quicktype](https://app.quicktype.io/).
+  - Copy lagi kode yang diberi [Quicktype](https://app.quicktype.io/).
+  - Buat folder baru pada `lib/models` lalu buat file baru bernama `item.dart` dan Paste kode dari [Quicktype](https://app.quicktype.io/) ke file tersebut.
+
+4. Membuat halaman yang berisi daftar semua item yang terdapat pada endpoint `JSON` di Django.
+  - Tampilkan name, amount, dan description dari masing-masing item pada halaman ini.
+    - Pada `lib/screens` buat file baru bernama `list_item.dart`.
+    - Isi `list_item.dart` dengan kode berikut :
+
+    ``` dart
+    import 'package:flutter/material.dart';
+    import 'package:http/http.dart' as http;
+    import 'dart:convert';
+    import 'package:peti_library/models/item.dart';
+    import 'package:peti_library/screens/detail_item.dart';
+    import 'package:peti_library/widgets/left_drawer.dart';
+
+    class ItemPage extends StatefulWidget {
+      const ItemPage({Key? key}) : super(key: key);
+
+      @override
+      _ItemPageState createState() => _ItemPageState();
+    }
+
+    class _ItemPageState extends State<ItemPage> {
+      Future<List<Item>> fetchItem() async {
+        var url = Uri.parse('http://127.0.0.1:8000/json/');
+        var response = await http.get(
+          url,
+          headers: {"Content-Type": "application/json"},
+        );
+
+        // melakukan decode response menjadi bentuk json
+        var data = jsonDecode(utf8.decode(response.bodyBytes));
+
+        // melakukan konversi data json menjadi object Product
+        List<Item> listItem = [];
+        for (var d in data) {
+          if (d != null) {
+            listItem.add(Item.fromJson(d));
+          }
+        }
+        return listItem;
+      }
+
+      @override
+      Widget build(BuildContext context) {
+        return Scaffold(
+            appBar: AppBar(
+              title: const Text('Item'),
+            ),
+            drawer: const LeftDrawer(),
+            body: Container(
+              color: Colors.deepPurple[900],
+              child: FutureBuilder(
+                  future: fetchItem(),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if (snapshot.data == null) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else {
+                      if (!snapshot.hasData) {
+                        return const Column(
+                          children: [
+                            Text(
+                              "Tidak ada data produk.",
+                              style:
+                                  TextStyle(color: Color(0xff59A5D8), fontSize: 20),
+                            ),
+                            SizedBox(height: 8),
+                          ],
+                        );
+                      } else {
+                        return ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (_, index) => InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ItemDetailPage(
+                                              item: snapshot.data![index])));
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 12),
+                                  padding: const EdgeInsets.all(20.0),
+                                  decoration: BoxDecoration(
+                                    color: Colors
+                                        .white,
+                                    borderRadius: BorderRadius.circular(
+                                        10),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "${snapshot.data![index].fields.name}",
+                                        style: const TextStyle(
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 20),
+                                      Text(
+                                          "${snapshot.data![index].fields.description}"),
+                                      const SizedBox(height: 20),
+                                    ],
+                                  ),
+                                )));
+                      }
+                    }
+                  }),
+            ));
+      }
+    }
+    ```
+  
+    - Tambahkan halaman `list_item.dart` ke `widgets/left_drawer.dart` dengan kode berikut :
+    ``` dart
+    ListTile(
+      leading: const Icon(Icons.shopping_basket),
+      title: const Text('Daftar Item'),
+      onTap: () {
+        // Route menu ke halaman produk
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const ItemPage()),
+        );
+      },
+    ),
+    ```
+
+    - Ubah kegunaan _button_ `Lihat Item` pada halaman utama jadi mengarahkan ke halaman `ItemPage`.
+
+5. Membuat halaman detail untuk setiap item yang terdapat pada halaman daftar Item
+  - Halaman ini dapat diakses dengan menekan salah satu item pada halaman daftar Item.
+  - Tampilkan seluruh atribut pada model item kamu pada halaman ini.
+  - Tambahkan tombol untuk kembali ke halaman daftar item.
+    - Pada `lib/screens` buat file baru bernama `detail_item.dart` yang berfungsi sebagai file utama halaman detail produk. Isi file dengan kode berikut :
+    ``` dart
+    import 'package:flutter/material.dart';
+    import 'package:peti_library/models/item.dart';
+    import 'package:peti_library/widgets/left_drawer.dart';
+
+    class ItemDetailPage extends StatelessWidget {
+      final Item item;
+
+      const ItemDetailPage({Key? key, required this.item}) : super(key: key);
+
+      @override
+      Widget build(BuildContext context) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Item Details'),
+            backgroundColor: Colors.indigo,
+            foregroundColor: Colors.white,
+          ),
+          drawer: const LeftDrawer(),
+          body: Container(
+            color:
+                Colors.deepPurple[900], 
+            padding: const EdgeInsets.all(16.0),
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.all(20.0),
+                decoration: BoxDecoration(
+                  color:
+                      Colors.white,
+                  borderRadius: BorderRadius.circular(
+                      10),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      item.fields.name,
+                      style: const TextStyle(
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      "Amount: ${item.fields.amount}",
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      "Description: ${item.fields.description}",
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(
+                            context);
+                      },
+                      child: const Text('Back'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      }
+    }
+    ```
+
+    - Pada `list_item.dart` tambahkan kode untuk menghubungkan ke halaman detail item setelah bagian `else` seperti ini :
+    ``` dart
+    else {
+      return ListView.builder(
+          itemCount: snapshot.data!.length,
+          itemBuilder: (_, index) => InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ItemDetailPage(
+                            item: snapshot.data![index])));
+              },
+              child: Container(
+                margin: const EdgeInsets.symmetric(
+                    horizontal: 16, vertical: 12),
+                padding: const EdgeInsets.all(20.0),
+                decoration: BoxDecoration(
+                  color: Colors
+                      .white,
+                  borderRadius: BorderRadius.circular(
+                      10),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${snapshot.data![index].fields.name}",
+                      style: const TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                        "${snapshot.data![index].fields.description}"),
+                    const SizedBox(height: 20),
+                  ],
+                ),
+              )));
+    }
+    ```
+
+    - Pada `detail_item.dart` tambahkan kode berikut sebagai pembuatan button untuk kembali ke halaman daftar item.
+    ``` dart
+    ElevatedButton(
+      onPressed: () {
+        Navigator.pop(
+            context);
+      },
+      child: const Text('Back'),
+    ),
+    ```
+
+
+
+
+
+
 
 </details>
 
@@ -546,7 +1016,7 @@ Penerapan clean architecture pada aplikasi Flutter melibatkan pemisahan kode men
 - Pada `menu.dart` :
     - Ubah sifat widget halaman dari stateful menjadi stateless. Lakukan hal ini dengan merubah bagian `({super.key, required this.title})` menjadi `({Key? key}) : super(key: key);`.
     - Tambahkan teks dan card dengan menambahkan barang yang dijual (dalam kasus saya buku) dengan _define_ tipe berikut:
-    ```
+    ``` dart
     class ShopItem {
         final String name;
         final IconData icon;
@@ -563,7 +1033,7 @@ Penerapan clean architecture pada aplikasi Flutter melibatkan pemisahan kode men
     ];
     ```
     - Kemudian tambahkan kode berikut di dalam Widget Build:
-    ```
+    ``` dart
     @override
     Widget build(BuildContext context) {
         return Scaffold(
@@ -617,7 +1087,7 @@ Penerapan clean architecture pada aplikasi Flutter melibatkan pemisahan kode men
 
 3. **Memunculkan Snackbar**
 - Terakhir, tampilkan card dan buat Snackbar dengan membuat widget stateless baru:
-```
+``` dart
 class ShopCard extends StatelessWidget {
   final ShopItem item;
 
@@ -664,7 +1134,7 @@ class ShopCard extends StatelessWidget {
 }
 ```
 Snackbar akan muncul ketika saya menuliskan potongan kode berikut:
-```
+``` dart
 child: InkWell(
     onTap: () {
     // Memunculkan SnackBar ketika diklik
@@ -680,7 +1150,7 @@ child: InkWell(
 
 4. **Bonus : Mengimplementasikan warna-warna yang berbeda untuk setiap tombol (`Lihat Item`, `Tambah Item`, dan `Logout`).**
 - Buat parameter baru bernama color:
-```
+``` dart
 class ShopItem {
   final String name;
   final IconData icon;
